@@ -22,50 +22,92 @@ function passwordLength (){
   }else if (userLength = null){
     window.alert('No problem! Bye.')
     return
-  } prompts();
+  } else{ prompts();}
 }
 // Prompts for user preferences regarding password criteria
 function prompts(){
   uppercase = window.confirm("click OK if you would like your password to include uppercases, click cancel otherwise")
-  if (uppercase){
-    string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    lowercase = window.confirm("click OK if you would like your password to include lowercases, click cancel otherwise")
-    if (lowercase){
-      string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-      numeric = window.confirm("click OK if you would like your password to include numbers, click cancel otherwise")
-      if (numeric){
-        string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        specialChar = window.confirm("click OK if you would like your password to include especial characters, click cancel otherwise")
-        if (specialChar){
-        string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$';
-        generatePassword();
-        }generatePassword();
-      }specialChar = window.confirm("click OK if you would like your password to include especial characters, click cancel otherwise")
-    }
-  } lowercase = window.confirm("click OK if you would like your password to include lowercases, click cancel otherwise")
-  string = 'abcdefghijklmnopqrstuvwxyz';
+  lowercase = window.confirm("click OK if you would like your password to include lowercases, click cancel otherwise")
   numeric = window.confirm("click OK if you would like your password to include numbers, click cancel otherwise")
-  if (numeric){
-    string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  } specialChar = window.confirm("click OK if you would like your password to include especial characters, click cancel otherwise")
-  if (specialChar){
-    string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$';
-    generatePassword();
-  }window.alert('You must select at least one type of character')
-  begin = window.confirm('Would you like to create a password?')
-  if (begin){
+  specialChar = window.confirm("click OK if you would like your password to include especial characters, click cancel otherwise")
+  // YES UPPERCASE
+  if (uppercase){
+    string = stringUpper
+    // YES UPPERCASE & LOWERCASE
+    if (lowercase){
+      string += stringLower;
+      // YES UPPERCASE & LOWERCASE & NUMERIC
+      if (numeric){
+        string += stringNumeric;        
+        // YES ALL
+        if (specialChar){
+          string += stringSpecial;
+          console.log(string)
+          return
+          } return                //NO SPECIAL CHARACTERS 
+        // YES UPPERCASE YES LOWERCASE NO NUMERIC
+      }else if (specialChar){
+          string += stringSpecial; //NO NUMERIC
+          return
+        }else {return} //UPPERCASE AND LOWERCASE
+        // YES UPPERCASE NO LOWERCASE
+    }else if (numeric){
+      string += stringNumeric; //UPPERCASE & NUMERIC       
+      if (specialChar){
+        string += stringSpecial; //UPPERCASE & NUMERIC & SPECIAL CHAR
+        return // NO LOWERCASE
+      }return //UPPERCASE & NUMERIC
+      // YES UPPERCASE NO LOWERCASE NO NUMERIC
+    }else if (specialChar){
+      string += stringSpecial; // UPPERCASE & SPECIAL CHAR
+      return
+      }else {return} //ONLY UPPERCASE
+      // NO UPPER CASE
+  } else if (lowercase){
+    string = stringLower; //YES LOWERCASE
+    if (numeric){
+      string += stringNumeric; //LOWERCASE & NUMERIC        
+      if (specialChar){
+        string += stringSpecial; //LOWERCASE & NUMERIC & SPECIAL CHAR
+        return
+      } return//LOWERCASE & NUMERIC
+      // NO UPPERCASE, YES LOWERCASE, NO NUMERIC
+    }else if (specialChar){
+      string += stringSpecial; // LOWECASE & SPECIAL CHARACTERS
+      return 
+      }else {return } // ONLY LOWERCASE
+      // NO UPPERCASE NO LOWERCASE
+  }else if (numeric){
+    string = stringNumeric;  //NUMERIC      
+    if (specialChar){
+      string += stringSpecial; // NUMERIC & SPECIAL CHAR
+      return
+    }return //ONLY NUMERIC
+    // NO UPPER NO LOWER NO NUMERIC
+  }else if (specialChar){
+    string = stringSpecial; //ONLY SPECIAL CHAR
+    return 
+  } else {
+    window.alert("you must select at least one type of character")
     prompts()
-  }return;
+  }
+  return
 }
+
 
 // Generate Password random characters
 function generatePassword(){
   let result = "";
-  for (i =0; i <= userLength; i++){
-    let index = Math.floor(Math.random()*string.length - 1);
+  let index = 0
+  for (i =0; i < userLength; i++){
+    index = Math.floor(Math.random()*string.length - 1);
+    
     result += string.charAt(index);
   }
+  console.log(string)
+  console.log(result)
   return result;
+
 }
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
@@ -79,94 +121,4 @@ function writePassword() {
 return;
 }
 
-passwordLength();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function activatePrompts() {
-//   let length = window.prompt("Please specify a length for your password");
-//   if(length < 8 || length > 128){
-//     window.alert("your password should be larger than 8 and shorter than 129 characters")
-//     activatePrompts()
-//   }let confirmLength = window.confirm("you would like a password that is "+length+" characters long, is this correct?")
-
-//   if (confirmLength){
-//      let lowercase = window.confirm ("Would you like your password to include lowercase characters?")
-//      let uppercase = window.confirm ("Would you like your password to include uppercase characters?")
-//      let numeric = window.confirm ("Would you like your password to include numbers?")
-//      let specialChar = window.confirm ("Would you like your password to include special characters?")
-//      if(lowercase && uppercase && numeric && specialChar){
-//       //  include ALL
-//      }else if (lowercase !=true && uppercase && numeric && specialChar){
-//       // Not Lowercase 
-//      }else if (lowercase !=true && uppercase != true && numeric && specialChar){
-//       //  Not lowercase nor uppercase
-//      }else if (lowercase !=true && uppercase != true && numeric !=true && specialChar ){
-//       //  Only Special Characters
-//      }else if (lowercase !=true && uppercase != true && numeric !=true && specialChar !=){
-//        window.alert("Your password must contain at least one type of character")
-//        activatePrompts();
-//      }else if (lowercase && uppercase && numeric && specialChar !=true){
-//         // Not Special Characters
-//      }else if (lowercase && uppercase && numeric !=true && specialChar !=true){
-//       //  Not special characters nor numeric
-//      }else if (lowercase && uppercase !=true && numeric != true && specialChar !=true){
-//       //  Only lowercase
-//      }else if(lowercase && uppercase && numeric !=true && specialChar){
-//       //  Not numeric
-//      }else if (lowercase && uppercase !=true && numeric !=true && specialChar){
-//       //  Not uppercase nor numeric
-//      }else if (lowercase && uppercase != true && numeric && specialChar){
-//       //  not uppercase
-//      }else if (lowercase !=true && uppercase !=true && numeric && specialChar){
-//       //  Not lowercase nor uppercase
-//      }else if (lowercase !=true && uppercase && numeric !=true && specialChar !=true){
-//       //  Only uppercase
-//      }else{
-//       //  Not lowercase nor special char
-//      }
-//   }activatePrompts();
-
-// }
-
-
-
-
-
-
-// // Write password to the #password input
-// function writePassword() {
-//   let password = generatePassword(){
-//     let con = "";
-//     let str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' + 
-//     'abcdefghijklmnopqrstuvwxyz0123456789@#$';
-//     For (i = 0; i<=8; i++){
-//       let pos = Math.floor(Math.random()*str.lenght + 1);
-//       con[i] = str.charAt(pos)
-//     }
-//     return con;
-//   };
-//   let passwordText = document.querySelector("#password");
-
-//   passwordText.value = password;
-
-// }
-
-
-// generateBtn.addEventListener("click", activatePrompts);
-// activatePrompts();
+passwordLength()
